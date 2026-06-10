@@ -46,3 +46,4 @@ $RECYCLE.BIN/
 # NFS temporary files
 .nfs*
 knowledge
+superprompt.code-workspace
