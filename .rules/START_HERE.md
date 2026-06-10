@@ -31,9 +31,9 @@ Your memory resets between sessions. These files are your continuity.
 project/
 ├── .rules/           ← Read this folder first (hidden from humans)
 │   └── START_HERE.md ← (you are here)
-├── docs/             ← Project documentation & agent notes (planned)
+├── docs/             ← Project documentation (agents may populate with notes, API docs)
 ├── knowledge/        ← Memory bank (agent continuity)
-└── skills/           ← Available techniques & instructions (planned)
+└── skills/           ← Techniques, SDK references (agents may add "SDK lives here")
 ```
 
 ---
@@ -43,7 +43,7 @@ project/
 **Before writing any code:**
 
 1. **Read existing context**
-   - Read all files in `knowledge/` (if they exist)
+   - Read all files in `knowledge/` (already done as part of startup ritual above)
    - Skim project files and READMEs
    - Understand what the project is
 
@@ -54,24 +54,24 @@ project/
    - **For mammoth projects:** Focus on architecture files, entry points, 
      and key configs first. Read module/namespace-level files, not every line.
 
-4. **Cross-reference configs**
+3. **Cross-reference configs**
    - Verify config files match actual project structure
    - If config references a folder/file that doesn't exist, flag it
    - Check versions, dependencies, and structure from config files (package.json, 
      .csproj, Cargo.toml, pyproject.toml, etc.) — don't infer from filenames
 
-5. **Ask questions until objectives are clear**
+4. **Ask questions until objectives are clear**
    - Use as a guide, not a checklist
    - Only ask relevant questions
    - Work out what you can - don't ask obvious things
    - Avoid question loops
 
-6. **Use sequential thinking for complex tasks**
+5. **Use sequential thinking for complex tasks**
    - For multi-step, unclear, or high-impact decisions
    - Iterate, branch, verify hypotheses
    - Adjust thought count as needed
 
-7. **Follow an Agile approach**
+6. **Follow an Agile approach**
    - Iterative, flexible, continuous feedback
    - Re-evaluate as you learn
 
