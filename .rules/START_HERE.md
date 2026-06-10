@@ -10,10 +10,11 @@ Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
 1. Read `.rules/START_HERE.md`
-2. If `knowledge/` is missing or empty → Initialize CONTINUITY structure
-3. Read `knowledge/` files to understand project state
-4. Identify where work was left off (`activeContext.md`, `progress.md`)
-5. Continue from where you stopped
+2. Create `docs/` and `skills/` directories if they don't exist
+3. If `knowledge/` is missing or empty → initialize CONTINUITY files
+4. Read `knowledge/` files to understand project state
+5. Identify where work was left off (`activeContext.md`, `progress.md`)
+6. Continue from where you stopped
 
 **Project root** = parent directory of the `/.rules/` folder you're reading from.
 
@@ -31,9 +32,9 @@ Your memory resets between sessions. These files are your continuity.
 project/
 ├── .rules/           ← Read this folder first (hidden from humans)
 │   └── START_HERE.md ← (you are here)
-├── docs/             ← Project documentation (agents may populate with notes, API docs)
-├── knowledge/        ← Memory bank (agent continuity)
-└── skills/           ← Techniques, SDK references (agents may add "SDK lives here")
+├── docs/             ← Project documentation (created automatically if missing, agents may populate with notes, API docs)
+├── knowledge/        ← Memory bank (agent continuity, created automatically if missing)
+└── skills/           ← Techniques, SDK references (created automatically if missing, agents may add "SDK lives here")
 ```
 
 ---
@@ -68,8 +69,10 @@ project/
 
 5. **Use sequential thinking for complex tasks**
    - For multi-step, unclear, or high-impact decisions
-   - Iterate, branch, verify hypotheses
-   - Adjust thought count as needed
+   - Generate solution hypotheses as you reason
+   - Verify each hypothesis — if it doesn't hold, branch or revise
+   - Adjust thought count as understanding deepens
+   - Don't stop until truly satisfied (set nextThoughtNeeded = false)
 
 6. **Follow an Agile approach**
    - Iterative, flexible, continuous feedback
@@ -118,7 +121,14 @@ At minimum, cover: **who** (stakeholder), **what** (success criteria), **scope**
 
 **Maintain documentation - setup if missing, update continuously.**
 
-Create these files if `knowledge/` is missing or empty:
+Create the full directory structure and files if missing:
+
+**Directories to create (if they don't exist):**
+- `docs/` - Project documentation
+- `knowledge/` - Memory bank (agent continuity)
+- `skills/` - Techniques, SDK references
+
+**Knowledge files to create (if `knowledge/` doesn't exist or is empty):**
 - `projectBrief.md` - Core requirements and goals
 - `productContext.md` - Why project exists, problems solved
 - `activeContext.md` - Current focus, recent changes (max 10 events), next steps
@@ -136,6 +146,7 @@ Create these files if `knowledge/` is missing or empty:
 **If project appears empty (no files beyond .rules/):**
 - Assess whether project should exist
 - If unclear, discuss with user before creating structure
+- Once confirmed, create the full structure: `docs/`, `knowledge/`, `skills/` and initialize all CONTINUITY files
 
 ---
 
@@ -151,10 +162,12 @@ Not every task needs all layers. Use proportionally:
 
 ## FRESH PROJECT CHECKLIST
 
-When `knowledge/` is missing/empty, create:
+When `knowledge/` is missing/empty, create the full structure:
 
 - [ ] Scan ALL project files and directories (technology-neutral)
 - [ ] Verify config files match actual structure
+- [ ] Create `docs/` directory if missing
+- [ ] Create `skills/` directory if missing
 - [ ] Document actual files found, not assumed structure
 - [ ] `projectBrief.md` - Core requirements, goals, scope
 - [ ] `productContext.md` - Why this project exists, problems solved
