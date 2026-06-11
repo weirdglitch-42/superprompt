@@ -17,8 +17,10 @@ Superprompt provides:
 
 1. An AI agent enters the project
 2. Agent reads `.rules/START_HERE.md`
-3. Agent reads `knowledge/` files for context
-4. Agent continues from where work was left off
+3. Agent creates `docs/` and `skills/` directories if missing
+4. Agent initializes `knowledge/` only if missing/empty
+5. Agent reads `knowledge/` files for context
+6. Agent continues from where work was left off
 
 ## Folder Structure
 
@@ -26,6 +28,7 @@ Superprompt provides:
 project/
 ├── .rules/              # Agent operating framework
 │   └── START_HERE.md   # Entry point (read first)
+├── docs/                # Project documentation (created automatically if missing)
 ├── knowledge/           # Memory bank (agent continuity)
 │   ├── projectBrief.md      # Core requirements, goals
 │   ├── productContext.md    # Why project exists
@@ -34,7 +37,7 @@ project/
 │   ├── techContext.md      # Technologies, setup
 │   ├── progress.md         # What works, what's left
 │   └── changelog.md        # Chronological change log
-└── skills/              # Available techniques (planned)
+└── skills/              # Available techniques (created automatically if missing)
 ```
 
 ## 3-Layer Approach
