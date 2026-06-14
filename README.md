@@ -12,12 +12,13 @@ Superprompt provides:
 - **A standardized startup ritual** — Agents read rules → check knowledge → continue
 - **A memory bank** (`knowledge/`) that persists context between sessions
 - **A quality framework** — SPEC → VERIFY → CONTINUITY for consistent output
+- **LOOP MODE** — For ongoing projects: design automations, use worktrees, codify skills, connect to tools, split maker/checker
 
 ## Quick Start
 
 1. An AI agent enters the project
 2. Agent reads `.rules/START_HERE.md`
-3. Agent creates `docs/` and `skills/` directories if missing
+3. Agent creates `docs/`, `skills/`, and agent config folders if missing
 4. Agent initializes `knowledge/` only if missing/empty
 5. Agent reads `knowledge/` files for context
 6. Agent continues from where work was left off
@@ -27,7 +28,8 @@ Superprompt provides:
 ```
 project/
 ├── .rules/              # Agent operating framework
-│   └── START_HERE.md   # Entry point (read first)
+│   ├── START_HERE.md   # Entry point (read first)
+│   └── *.md            # Agent skills, conventions
 ├── docs/                # Project documentation (created automatically if missing)
 ├── knowledge/           # Memory bank (agent continuity)
 │   ├── projectBrief.md      # Core requirements, goals
@@ -37,7 +39,8 @@ project/
 │   ├── techContext.md      # Technologies, setup
 │   ├── progress.md         # What works, what's left
 │   └── changelog.md        # Chronological change log
-└── skills/              # Available techniques (created automatically if missing)
+├── skills/              # Available techniques (created automatically if missing)
+└── [agent-config]/      # Agent-specific config (.claude/, .codex/, etc.)
 ```
 
 ## 3-Layer Approach
@@ -53,16 +56,24 @@ Validate before finalizing. Cross-check against spec, iterate until criteria are
 ### Layer 3: CONTINUITY
 Maintain documentation. Keep knowledge files current, document decisions.
 
-## Self-Referential Nature
+## LOOP MODE (for ongoing projects)
 
-The rules describe themselves. This framework can be managed by agents using the framework. The `.rules/` folder starts with a dot, hidden from humans — it's purely for AI agents.
+When work never stops — daily triage, CI monitoring, continuous refactoring — design a loop instead of running tasks manually.
+
+Five primitives (tool-agnostic):
+1. **Automations** — scheduled prompts, `/goal`, `/loop`, hooks
+2. **Worktrees** — parallel isolated checkouts (`git worktree`)
+3. **Skills** — codified project knowledge (SKILL.md files)
+4. **Connectors** — MCP servers, issue trackers, Slack, CI
+5. **Sub-agents** — maker/checker split for unattended verification
 
 ## Scale to Complexity
 
 Not every task needs all layers:
 - **Trivial** (single command): Skip to implementation
 - **Medium** (feature, refactor): Full 3 layers
-- **Mammoth** (architecture): Focus on architecture, entry points, key configs
+- **Complex** (architecture): Extra iteration in SPEC, deeper VERIFY
+- **Ongoing** (maintenance, unattended ops): Consider LOOP MODE
 
 ## Design Philosophy
 
@@ -70,3 +81,5 @@ Not every task needs all layers:
 - Verify don't assume — check config files, don't infer from filenames
 - File-based persistence — knowledge files survive session resets
 - Stale detection — if knowledge is >7 days old, reinitialize
+- Present trade-offs neutrally — let the user decide (EVENHANDEDNESS)
+</｜｜DSML｜｜parameter>
