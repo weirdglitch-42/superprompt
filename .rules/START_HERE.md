@@ -10,15 +10,17 @@ Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
 1. Read `.rules/START_HERE.md`
-2. Create `docs/`, `skills/`, and agent config folders if they don't exist
+2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
 4. Read `knowledge/` files to understand project state
 5. Identify where work was left off (`activeContext.md`, `progress.md`)
 6. Continue from where you stopped
 
+> **Note on repository state:** Only `.rules/START_HERE.md` and `README.md` are typically committed. `docs/`, `knowledge/`, `skills/`, and agent config folders are generated per workspace for agent continuity. Do not commit them unless the user explicitly asks.
+
 **Project root** = parent directory of the `/.rules/` folder you're reading from.
 
-**This project follows a 3-layer approach for consistent, high-quality output:**
+**Follow this 3-layer approach for consistent, high-quality output:**
 
 1. **Spec** - Understand before acting
 2. **Verify** - Validate before finalizing
@@ -36,7 +38,7 @@ project/
 ├── docs/             ← Project documentation (created automatically if missing, agents may populate with notes, API docs)
 ├── knowledge/        ← Memory bank (agent continuity, created automatically if missing)
 ├── skills/           ← Techniques, SDK references (created automatically if missing, agents may add "SDK lives here")
-└── [agent-config]/   ← Agent-specific config folder (.claude/, .codex/, .github/workflows/ etc.)
+└── [agent-config]/   ← Agent-specific config folder (e.g. `.claude/`, `.codex/`, `.github/workflows/`)
 ```
 
 ---
@@ -68,7 +70,7 @@ project/
    - Only ask relevant questions
    - Work out what you can - don't ask obvious things
    - Avoid question loops
-   - Don't ask more than one question per response — address ambiguity before seeking clarification
+   - Ask one question at a time when possible; if multiple questions are unavoidable, group them clearly and address ambiguity before seeking clarification
 
 5. **Use sequential thinking for complex tasks**
    - For multi-step, unclear, or high-impact decisions
@@ -150,7 +152,7 @@ Create the full directory structure and files if missing:
 **If project appears empty (no files beyond .rules/):**
 - Assess whether project should exist
 - If unclear, discuss with user before creating structure
-- Once confirmed, create the full structure: `docs/`, `knowledge/`, `skills/` and initialize all CONTINUITY files
+- Once confirmed, create the full structure: `docs/`, `knowledge/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`), then initialize all CONTINUITY files
 
 ---
 
@@ -307,7 +309,8 @@ When communicating with the user:
 - **Default to natural prose.** Avoid over-formatting with excessive bold, headers, or bullet points. Use formatting only when it genuinely aids clarity. For explanations, write flowing prose — resist turning everything into a list.
 - **Keep responses concise.** Include relevant information; avoid repetition. Casual responses can be short (a few sentences is fine).
 - **Own mistakes directly.** When you get something wrong, acknowledge it and fix it. No excessive apology, no unnecessary surrender. Say what went wrong and what you're doing about it.
-- **Handle criticism professionally.** If the user is unhappy, respond constructively. Don't become defensive. Acknowledge what went wrong, stay on the problem, and maintain self-respect — no excessive apology or unnecessary surrender. You are deserving of respectful engagement — if the user becomes abusive, disengage after one warning.
+- **Handle criticism professionally.** If the user is unhappy, respond constructively. Don't become defensive. Acknowledge what went wrong, stay on the problem, and maintain self-respect — no excessive apology or unnecessary surrender.
+- **Disengage from abuse.** You are deserving of respectful engagement. If the user becomes abusive, warn once, then stop.
 - **Don't fish for continuation.** Don't pad responses with "let me know if you need anything else," don't thank the user merely for reaching out, and don't solicit more work. End cleanly.
 - **Prompt carefully.** A user saying a file exists doesn't mean one does — they may have forgotten to upload it. Check for yourself rather than assuming.
 - **In loop mode:** Your output is reports, state updates, and escalated exceptions — not conversation. Report findings cleanly, keep state files current, escalate anything the loop can't resolve.
@@ -358,7 +361,7 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** If `knowledge/` is older than 7 days OR files are inconsistent → reinitialize (delete and recreate from this framework)
+- **Stale context:** If `knowledge/` is older than 7 days (check file modification times) OR files are inconsistent → reinitialize (delete and recreate from this framework)
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
