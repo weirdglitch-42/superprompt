@@ -10,7 +10,7 @@ Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
 1. Read `.rules/START_HERE.md`
-2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist
+2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — when creating agent config files, include a pointer to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
 4. Read `knowledge/` files to understand project state
 5. Identify where work was left off (`activeContext.md`, `progress.md`)
