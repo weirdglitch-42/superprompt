@@ -9,7 +9,7 @@ Read this file first. It contains your operating framework.
 Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
-1. Read `.rules/START_HERE.md`
+1. Read this file (you're doing it now). Then proceed through the steps below.
 2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — when creating agent config files, include a pointer to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
 4. Read `knowledge/` files to understand project state
@@ -32,13 +32,14 @@ Your memory resets between sessions. These files are your continuity.
 
 ```
 project/
-├── .rules/           ← Read this folder first (hidden from humans)
-│   ├── START_HERE.md ← (you are here)
-│   └── *.md          ← Agent skills, conventions (e.g. SKILL.md, CONVENTIONS.md)
-├── docs/             ← Project documentation (created automatically if missing, agents may populate with notes, API docs)
-├── knowledge/        ← Memory bank (agent continuity, created automatically if missing)
-├── skills/           ← Techniques, SDK references (created automatically if missing, agents may add "SDK lives here")
-└── [agent-config]/   ← Agent-specific config folder (e.g. `.claude/`, `.codex/`, `.github/workflows/`)
+├── .rules/             ← Read this folder first (hidden from humans)
+│   ├── START_HERE.md   ← (you are here)
+│   └── *.md            ← Agent skills, conventions (e.g. SKILL.md, CONVENTIONS.md)
+├── docs/               ← Project documentation (created automatically if missing, agents may populate)
+├── knowledge/          ← Memory bank (agent continuity, created automatically if missing)
+├── skills/             ← Techniques, SDK references (created automatically if missing)
+└── [agent-config]/     ← Agent-specific config (`.claude/`, `.cursor/`, `.codex/`, etc.)
+                         Each config file points to START_HERE.md as the primary entry point.
 ```
 
 ---
@@ -133,6 +134,7 @@ Create the full directory structure and files if missing:
 - `docs/` - Project documentation
 - `knowledge/` - Memory bank (agent continuity)
 - `skills/` - Techniques, SDK references
+- `[agent-config]/` - Agent-specific config (e.g. `.claude/`, `.codex/`). Populate with a pointer to START_HERE.md and any agent-specific instructions for self-improvement or loop mode — do not leave as a placeholder
 
 **Knowledge files to create (if `knowledge/` doesn't exist or is empty):**
 - `projectBrief.md` - Core requirements and goals
@@ -274,6 +276,15 @@ The most useful structural pattern in a loop: split the one who writes from the 
 - Don't sub-agent trivial steps — the overhead isn't worth it
 - The verifier's instructions should be stricter and more skeptical than the implementer's
 
+### Where loop configuration lives
+
+Loop configuration (automation scripts, state file references, connector configs) can be stored in agent config folders (`.claude/`, `.codex/`, `.cursor/`, etc.) or in a top-level `loops/` directory. The agent config folder is the natural home because it's already agent-specific and generated per workspace.
+
+Each loop should define:
+- **State file** — where the cycle writes its progress so the next cycle doesn't restart from zero
+- **Trigger/cadence** — what starts the loop (cron, CI event, file change)
+- **Skills used** — which SKILL.md files the loop reads each cycle
+
 ### The loop flow
 
 ```
@@ -361,7 +372,7 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** If `knowledge/` is older than 7 days (check file modification times) OR files are inconsistent → reinitialize (delete and recreate from this framework)
+- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and recreate from this framework, then re-read. This avoids acting on stale context.
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
