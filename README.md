@@ -18,12 +18,12 @@ Superprompt provides:
 
 1. An AI agent enters the project
 2. Agent reads `.rules/START_HERE.md`
-3. Agent creates `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if missing
+3. Agent creates `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if missing — config files must point back to `.rules/START_HERE.md` as the primary entry point, plus any agent-specific instructions for self-improvement/loop mode
 4. Agent initializes `knowledge/` only if missing/empty
 5. Agent reads `knowledge/` files for context
 6. Agent continues from where work was left off
 
-Only `.rules/START_HERE.md` and this `README.md` are committed. Everything else is generated per workspace for agent continuity.
+Only `.rules/START_HERE.md` and this `README.md` are typically committed. Placeholder files (`.gitkeep`) in `docs/` and `skills/` may also be tracked. Everything else is generated per workspace for agent continuity.
 
 ## Folder Structure
 
@@ -82,5 +82,5 @@ Not every task needs all layers:
 - Technology-neutral — works for any language or framework
 - Verify don't assume — check config files, don't infer from filenames
 - File-based persistence — knowledge files survive session resets
-- Stale detection — if knowledge is >7 days old, reinitialize
+- Stale detection — check knowledge file ages before reading; reinitialize if >7 days old or inconsistent
 - Present trade-offs neutrally — let the user decide (EVENHANDEDNESS)
