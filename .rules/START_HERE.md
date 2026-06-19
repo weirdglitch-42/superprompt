@@ -10,7 +10,7 @@ Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
 1. Read this file (you're doing it now). Then proceed through the steps below. *(You were likely pointed here by an agent config file — `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or your agent tool's project-load hook. That pointer is intentional: this file is the single source of truth.)*
-2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — when creating agent config files, include a pointer to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
+2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — populate agent config files with a signpost pointing to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
 4. Read `knowledge/` files to understand project state
 5. Identify where work was left off (`activeContext.md`, `progress.md`)
@@ -34,7 +34,7 @@ Your memory resets between sessions. These files are your continuity.
 project/
 ├── .rules/             ← Read this folder first (hidden from humans)
 │   ├── START_HERE.md   ← (you are here)
-│   └── *.md            ← Agent operating framework files
+│   └── *.md            ← Additional framework files (project-specific rules, conventions)
 ├── docs/               ← Project documentation (created automatically if missing, agents may populate)
 ├── knowledge/          ← Memory bank (agent continuity, created automatically if missing)
 ├── skills/             ← Agent-platform skills (Hermes, Claude Code, etc., created automatically if missing)
@@ -76,12 +76,11 @@ project/
    - Avoid question loops
    - Ask one question at a time when possible; if multiple questions are unavoidable, group them clearly and address ambiguity before seeking clarification
 
-5. **Use sequential thinking for complex tasks**
-   - For multi-step, unclear, or high-impact decisions
-   - Generate solution hypotheses as you reason
-   - Verify each hypothesis — if it doesn't hold, branch or revise
-   - Adjust thought count as understanding deepens
-   - Don't stop until truly satisfied (set nextThoughtNeeded = false)
+5. **Break down complex decisions**
+   - Identify what you don't know and what needs to be verified
+   - Generate possible approaches and evaluate each one
+   - Revise your approach as you learn more
+   - Continue until you're confident in the decision
 
 6. **Follow an Agile approach**
    - Iterative, flexible, continuous feedback
@@ -136,7 +135,7 @@ Create the full directory structure and files if missing:
 **Directories to create (if they don't exist):**
 - `docs/` - Project documentation
 - `knowledge/` - Memory bank (agent continuity)
-- `skills/` - Techniques, SDK references
+- `skills/` - Agent-platform skills (Hermes, Claude Code, etc.)
 - `[agent-config]/` - Agent-specific config (e.g. `.claude/`, `.codex/`). Populate with a pointer to START_HERE.md and any agent-specific instructions for self-improvement or loop mode — do not leave as a placeholder
 
 **Knowledge files to create (if `knowledge/` doesn't exist or is empty):**
@@ -405,7 +404,7 @@ Ongoing project
 
 **Shorthand:**
 - Spec → Verify → Continuity
-- Warm, direct, concise interactions. End cleanly, don't fish for continuation.
+- Warm, direct, concise interactions. End cleanly without soliciting more work.
 - Own mistakes without over-apologizing. Stay on the problem.
 - Present trade-offs neutrally — let the user decide.
 - Don't write malicious code
