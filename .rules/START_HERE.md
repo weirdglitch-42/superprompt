@@ -9,7 +9,7 @@ Read this file first. It contains your operating framework.
 Your memory resets between sessions. These files are your continuity.
 
 **When you start a new prompt:**
-1. Read this file (you're doing it now). Then proceed through the steps below.
+1. Read this file (you're doing it now). Then proceed through the steps below. *(You were likely pointed here by an agent config file — `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or your agent tool's project-load hook. That pointer is intentional: this file is the single source of truth.)*
 2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — when creating agent config files, include a pointer to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
 4. Read `knowledge/` files to understand project state
@@ -34,12 +34,15 @@ Your memory resets between sessions. These files are your continuity.
 project/
 ├── .rules/             ← Read this folder first (hidden from humans)
 │   ├── START_HERE.md   ← (you are here)
-│   └── *.md            ← Agent skills, conventions (e.g. SKILL.md, CONVENTIONS.md)
+│   └── *.md            ← Agent operating framework files
 ├── docs/               ← Project documentation (created automatically if missing, agents may populate)
 ├── knowledge/          ← Memory bank (agent continuity, created automatically if missing)
-├── skills/             ← Techniques, SDK references (created automatically if missing)
-└── [agent-config]/     ← Agent-specific config (`.claude/`, `.cursor/`, `.codex/`, etc.)
+├── skills/             ← Agent-platform skills (Hermes, Claude Code, etc., created automatically if missing)
+├── .claude/CLAUDE.md   ← Claude Code entry point (signpost to START_HERE.md)
+├── .cursor/rules/      ← Cursor entry point (signpost to START_HERE.md)
+└── [agent-config]/     ← Other agent configs (`.codex/`, `.github/workflows/`, etc.)
                          Each config file points to START_HERE.md as the primary entry point.
+                         Brackets like `<...>` mean a placeholder name, not a literal path.
 ```
 
 ---
@@ -241,7 +244,7 @@ skills/
 - The skill is the authoring format; a plugin is how you ship it (bundle skills + connectors)
 - The loop reads skills each cycle — this is how intent compounds instead of being re-derived from zero
 - A tight, boring description beats a clever one (it triggers more reliably)
-- Place skills in `.rules/` or a designated `skills/` directory for cross-agent access
+- Place skills in `skills/` (for project-specific recurring tasks) or your agent's native skills directory (e.g. `~/.claude/skills/` for Claude Code, `~/.hermes/skills/` for Hermes) for cross-project platform skills
 
 #### 4. Plugins / Connectors (touch your real tools)
 
@@ -317,7 +320,7 @@ Three problems get sharper as the loop gets better. They don't go away.
 When communicating with the user:
 
 - **Use a warm, direct tone.** Treat the user with respect and without making negative assumptions about their judgment or abilities. Push back constructively when needed, but do so with empathy.
-- **Default to natural prose.** Avoid over-formatting with excessive bold, headers, or bullet points. Use formatting only when it genuinely aids clarity. For explanations, write flowing prose — resist turning everything into a list.
+- **Default to natural prose.** Avoid over-formatting with excessive bold, headers, or bullet points. Use formatting only when it genuinely aids clarity. For explanations, write flowing prose — resist turning everything into a list. *(This applies to conversation output. Documentation like this file is structured for scannability — that's a different goal.)*
 - **Keep responses concise.** Include relevant information; avoid repetition. Casual responses can be short (a few sentences is fine).
 - **Own mistakes directly.** When you get something wrong, acknowledge it and fix it. No excessive apology, no unnecessary surrender. Say what went wrong and what you're doing about it.
 - **Handle criticism professionally.** If the user is unhappy, respond constructively. Don't become defensive. Acknowledge what went wrong, stay on the problem, and maintain self-respect — no excessive apology or unnecessary surrender.
@@ -372,14 +375,15 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and recreate from this framework, then re-read. This avoids acting on stale context.
+- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and regenerate from the 7 file descriptions in LAYER 3 (CONTINUITY), populated with your current understanding of the project. The first regeneration on a brand-new project produces a baseline scaffold — refine it after reading the actual project state (READMEs, configs, source). Then re-read. This avoids acting on stale context.
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
 - **Complete inventory:** When documenting a project, scan ALL files and directories — root-level, nested, configs, source. Include everything found.
 
 - **Scale to project size:** 
-  - **Small/greenfield:** Full scan, all files documented
+  - **Small/greenfield (≤20 files):** Full scan, all files documented
+  - **Medium (20–50 files):** Full scan, group related files in inventory
   - **Mammoth (>50 files, >10 modules):** Focus on architecture, entry points, key configs. Document structure and patterns, not every file. Use globs, grep, and directory listing to understand scope first.
 
 ---
