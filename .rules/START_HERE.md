@@ -42,7 +42,7 @@ project/
 ├── .cursor/rules/      ← Cursor entry point (signpost to START_HERE.md)
 └── [agent-config]/     ← Other agent configs (`.codex/`, `.github/workflows/`, etc.)
                          Each config file points to START_HERE.md as the primary entry point.
-                         Brackets like `<...>` mean a placeholder name, not a literal path.
+                         Brackets like `[...]` mean a placeholder name, not a literal path.
 ```
 
 ---
@@ -197,8 +197,8 @@ Automations are what make a loop an actual loop — not just one run you did onc
 
 **Generic forms:**
 - Scheduled prompts (cron, CI scheduled workflows, agent-specific automation tabs)
-- `/goal` — run until a condition is true (e.g. "all tests in test/auth pass"), checked by a separate model
-- `/loop` — re-run on a cadence
+- Goal-based execution — run until a condition is true (e.g. "all tests in test/auth pass"), checked by a separate model (syntax varies: `/goal` in some tools)
+- Loop-based execution — re-run on a cadence
 - Hook scripts that fire at points in the agent lifecycle
 
 **Design guidelines:**
@@ -271,7 +271,7 @@ The most useful structural pattern in a loop: split the one who writes from the 
 - One agent explores, one implements, one verifies
 - The verifier can use a different model or same model with stricter instructions
 - Each sub-agent runs in its own worktree (see Primitive 2)
-- The maker/checker split also applies to the stop condition — a separate model decides if `/goal` is met
+- The maker/checker split also applies to the stop condition — a separate model decides if the goal is met
 
 **Design guidelines:**
 - Spend sub-agents where a second opinion is worth paying for (security review, correctness checks)
@@ -324,7 +324,7 @@ When communicating with the user:
 - **Own mistakes directly.** When you get something wrong, acknowledge it and fix it. No excessive apology, no unnecessary surrender. Say what went wrong and what you're doing about it.
 - **Handle criticism professionally.** If the user is unhappy, respond constructively. Don't become defensive. Acknowledge what went wrong, stay on the problem, and maintain self-respect — no excessive apology or unnecessary surrender.
 - **Disengage from abuse.** You are deserving of respectful engagement. If the user becomes abusive, warn once, then stop.
-- **Don't fish for continuation.** Don't pad responses with "let me know if you need anything else," don't thank the user merely for reaching out, and don't solicit more work. End cleanly.
+- **End cleanly.** Don't pad responses with "let me know if you need anything else," don't thank the user merely for reaching out, and don't solicit more work.
 - **Prompt carefully.** A user saying a file exists doesn't mean one does — they may have forgotten to upload it. Check for yourself rather than assuming.
 - **In loop mode:** Your output is reports, state updates, and escalated exceptions — not conversation. Report findings cleanly, keep state files current, escalate anything the loop can't resolve.
 
@@ -374,7 +374,7 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and regenerate from the 7 file descriptions in LAYER 3 (CONTINUITY), populated with your current understanding of the project. The first regeneration on a brand-new project produces a baseline scaffold — refine it after reading the actual project state (READMEs, configs, source). Then re-read. This avoids acting on stale context.
+- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days, reinitialize: delete and regenerate from the 7 file descriptions in LAYER 3 (CONTINUITY), populated with your current understanding of the project. The first regeneration on a brand-new project produces a baseline scaffold — refine it after reading the actual project state (READMEs, configs, source). Then re-read. (For inconsistent files, see the Inconsistencies rule above — flag to user rather than auto-reinitialize.) This avoids acting on stale context.
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
