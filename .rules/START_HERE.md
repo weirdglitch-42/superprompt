@@ -372,7 +372,7 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and recreate from this framework, then re-read. This avoids acting on stale context.
+- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days OR files are inconsistent, reinitialize: delete and regenerate from the 7 file descriptions in LAYER 3 (CONTINUITY), populated with your current understanding of the project. Then re-read. This avoids acting on stale context.
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
