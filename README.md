@@ -17,7 +17,7 @@ Superprompt provides:
 ## Quick Start
 
 1. An AI agent enters the project
-2. Agent reads `.rules/START_HERE.md`
+2. Agent reads `.rules/START_HERE.md` (typically via an agent config signpost like `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or `.codex/AGENTS.md`)
 3. Agent creates `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if missing — config files must point back to `.rules/START_HERE.md` as the primary entry point, plus any agent-specific instructions for self-improvement/loop mode
 4. Agent initializes `knowledge/` only if missing/empty
 5. Agent reads `knowledge/` files for context
@@ -31,7 +31,8 @@ Only `.rules/START_HERE.md` and this `README.md` are typically committed. Placeh
 project/
 ├── .rules/              # Agent operating framework (committed)
 │   ├── START_HERE.md   # Entry point (read first)
-│   └── *.md            # Agent skills, conventions
+│   └── *.md            # Operating framework files
+├── README.md            # This file (committed)
 ├── docs/                # Project documentation (created automatically if missing)
 ├── knowledge/           # Memory bank (agent continuity, generated per workspace)
 │   ├── projectBrief.md      # Core requirements, goals
@@ -41,8 +42,11 @@ project/
 │   ├── techContext.md      # Technologies, setup
 │   ├── progress.md         # What works, what's left
 │   └── changelog.md        # Chronological change log
-├── skills/              # Available techniques (created automatically if missing)
-└── [agent-config]/      # Agent-specific config (e.g. `.claude/`, `.codex/`)
+├── skills/              # Agent-platform skills (created automatically if missing)
+├── .claude/CLAUDE.md    # Claude Code entry point (signpost to START_HERE.md)
+├── .cursor/rules/       # Cursor entry point (signpost to START_HERE.md)
+└── [agent-config]/      # Other agent configs (`.codex/`, `.github/workflows/`, etc.)
+                         Brackets mean a placeholder name, not a literal path.
 ```
 
 ## 3-Layer Approach
