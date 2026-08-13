@@ -4,6 +4,18 @@ Read this file first. It contains your operating framework.
 
 ---
 
+> **⚠️ TEMPLATE GUARD — read before anything else:** If you are reading this
+> file inside the **superprompt repo itself** (i.e. the directory contains
+> `.rules/`, `README.md`, and `.gitignore` but no actual application code),
+> you are in the **template**, not a workspace. **STOP.** Do NOT scaffold
+> `docs/`, `knowledge/`, `skills/`, or agent config folders here — that
+> pollutes the framework source. The correct move is to copy this framework
+> into your target project (e.g. `cp -r .rules/ /path/to/project/`), then run
+> the startup ritual *there*. This file is the source; workspaces are the
+> copies. If the project you're in *has* real code, skip this guard.
+
+---
+
 ## PURPOSE
 
 Your memory resets between sessions. These files are your continuity.
@@ -12,9 +24,25 @@ Your memory resets between sessions. These files are your continuity.
 1. Read this file (you're doing it now). Then proceed through the steps below. *(You were likely pointed here by an agent config file — `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or your agent tool's project-load hook. That pointer is intentional: this file is the single source of truth.)*
 2. Create `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if they don't exist — populate agent config files with a signpost pointing to this file as the primary entry point, plus any agent-specific instructions needed for self-improvement or loop mode
 3. If `knowledge/` is missing or empty → initialize CONTINUITY files
-4. Read `knowledge/` files to understand project state
-5. Identify where work was left off (`activeContext.md`, `progress.md`)
+4. Read `knowledge/` files **according to the read-set schema below** — do not skip to primary context. Your first act is to *reconcile* local state against this file, not merely skim it.
+5. Identify where work was left off (`activeContext.md`, `progress.md`) and note the most recent `changelog.md` entries
 6. Continue from where you stopped
+
+**Required read-set by task type** (read these files before acting; this is a schema, not a suggestion):
+
+| Task type | Must read, in order |
+|-----------|---------------------|
+| Continue existing work | `activeContext.md` → `progress.md` → tail of `changelog.md` |
+| New feature / design change | `projectBrief.md` → `systemPatterns.md` → `techContext.md` → tail of `changelog.md` |
+| Investigate a bug / regression | tail of `changelog.md` → `systemPatterns.md` → relevant `activeContext.md` |
+| Onboarding (new agent/session) | all seven `knowledge/` files, then `docs/` |
+
+**Precedence rule** (when files disagree): `changelog.md` is append-only and
+most recent — it wins over `projectBrief.md` / `productContext.md` / `activeContext.md`
+when they conflict. If you detect a conflict, do **not** silently default to
+the stable file: flag it (to the user, or in your CONTINUITY update) and act on
+the newer state. "Read the memory" is not enough — *validate* it against this
+rule-set before executing.
 
 > **Note on repository state:** Only `.rules/START_HERE.md` and `README.md` are typically committed. `docs/`, `knowledge/`, `skills/`, and agent config folders are generated per workspace for agent continuity. Do not commit them unless the user explicitly asks.
 

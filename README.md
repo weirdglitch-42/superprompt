@@ -20,7 +20,7 @@ Superprompt provides:
 2. Agent reads `.rules/START_HERE.md` (typically via an agent config signpost like `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or `.codex/AGENTS.md`)
 3. Agent creates `docs/`, `skills/`, and agent config folders (e.g. `.claude/`, `.codex/`, `.github/workflows/`) if missing — config files must point back to `.rules/START_HERE.md` as the primary entry point, plus any agent-specific instructions for self-improvement/loop mode
 4. Agent initializes `knowledge/` only if missing/empty
-5. Agent reads `knowledge/` files for context
+5. Agent reads `knowledge/` files per the read-set schema in START_HERE.md (task-type → required files), reconciling against the changelog rather than defaulting to primary context
 6. Agent continues from where work was left off
 
 Only `.rules/START_HERE.md` and this `README.md` are typically committed. Placeholder files (`.gitkeep`) in `docs/` and `skills/` may also be tracked. Everything else is generated per workspace for agent continuity.
