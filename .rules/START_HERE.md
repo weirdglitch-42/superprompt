@@ -4,15 +4,21 @@ Read this file first. It contains your operating framework.
 
 ---
 
-> **⚠️ TEMPLATE GUARD — read before anything else:** If you are reading this
-> file inside the **superprompt repo itself** (i.e. the directory contains
-> `.rules/`, `README.md`, and `.gitignore` but no actual application code),
-> you are in the **template**, not a workspace. **STOP.** Do NOT scaffold
-> `docs/`, `knowledge/`, `skills/`, or agent config folders here — that
-> pollutes the framework source. The correct move is to copy this framework
-> into your target project (e.g. `cp -r .rules/ /path/to/project/`), then run
-> the startup ritual *there*. This file is the source; workspaces are the
-> copies. If the project you're in *has* real code, skip this guard.
+> **⚠️ TEMPLATE GUARD — read before anything else:** Determine whether you are
+> in the **template** (the canonical superprompt framework source) or a
+> **workspace** (any project using a copy of it). The discriminator is git
+> identity, NOT file contents — a greenfield project that adopted this
+> framework looks identical to the template (just `.rules/`, `README.md`,
+> `.gitignore`, no code) and MUST be scaffolded. Check:
+> `git remote get-url origin 2>/dev/null`. If it resolves to the canonical
+> superprompt repository (github.com/weirdglitch-42/superprompt, or a clone
+> used to develop the framework itself) → you are in the **template**: STOP,
+> do NOT scaffold `docs/`, `knowledge/`, `skills/`, or agent config folders
+> here — that pollutes the framework source. Copy the framework into your
+> target project (e.g. `cp -r .rules/ /path/to/project/`) and run the startup
+> ritual *there*. **Otherwise — including no remote, or any other remote —
+> you are a workspace: proceed with the ritual and scaffold if missing.**
+> Greenfield projects especially: scaffolding from zero is the point.
 
 ---
 
