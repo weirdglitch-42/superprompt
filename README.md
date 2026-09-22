@@ -87,5 +87,5 @@ Not every task needs all layers:
 - Technology-neutral — works for any language or framework
 - Verify don't assume — check config files, don't infer from filenames
 - File-based persistence — knowledge files survive session resets
-- Stale detection — check knowledge file ages before reading; reinitialize if >7 days old or inconsistent
+- Continuity vs findings — keep the seven continuity files current; findings are dated records, never regenerated for age
 - Present trade-offs neutrally — let the user decide (EVENHANDEDNESS)

@@ -408,7 +408,38 @@ When asked to evaluate, compare, or decide between approaches:
 
 - **Inconsistencies:** If `knowledge/` files conflict or are outdated, flag to user and let them decide.
 
-- **Stale context:** Check `knowledge/` file modification times before reading them — if older than 7 days, reinitialize: delete and regenerate from the 7 file descriptions in LAYER 3 (CONTINUITY), populated with your current understanding of the project. The first regeneration on a brand-new project produces a baseline scaffold — refine it after reading the actual project state (READMEs, configs, source). Then re-read. (For inconsistent files, see the Inconsistencies rule above — flag to user rather than auto-reinitialize.) This avoids acting on stale context.
+- **Continuity vs findings — know which one you are reading.** Only the seven
+  CONTINUITY files (`projectBrief.md`, `productContext.md`, `activeContext.md`,
+  `systemPatterns.md`, `techContext.md`, `progress.md`, `changelog.md`) describe the
+  project NOW and must be kept current. Every other file in `knowledge/` is a dated
+  FINDING — research notes, specs, incident write-ups, measurements. Findings are the
+  project's earned knowledge: an old finding is a record, not a staleness problem, and
+  it must NEVER be deleted or regenerated because of its age. The rules below apply to
+  the seven continuity files only.
+
+- **Stale context (continuity files only):** Check modification times before reading.
+  A continuity file older than 7 days must not be trusted blindly — but it must not be
+  blindly deleted either. Age is a prompt to LOOK, never a verdict. Read it, then check
+  its claims against the live project (code, configs, tests, measurements, and the
+  `changelog.md` tail, which is append-only and wins on conflict). Then:
+  - **claims still accurate** → keep the file; note it as verified-current with today's
+    date. Regenerating a correct file destroys information for no gain.
+  - **claims contradicted by the project** → rewrite in place, preserving everything
+    still true, and record what changed and why.
+  - **claims conflict with another continuity file** → flag to the user (see
+    Inconsistencies above) and let them decide.
+  On a brand-new project the first write produces a baseline scaffold — refine it after
+  reading the actual project state (READMEs, configs, source). This avoids acting on
+  stale context without mistaking age for wrongness.
+
+- **A continuity file can be fresh and WRONG; it can be old and RIGHT.** Age and
+  correctness are independent, and correctness is the one that matters. Prefer checking
+  a claim (run the test, read the code, measure it) over trusting a recent timestamp.
+  In particular, treat any stated *safety property* ("fails closed", "never guesses",
+  "idempotent") as a claim to be verified against current behaviour, never as settled
+  truth inherited from a previous session. In a multi-writer project, honour that
+  project's own protocol: propose a change to a shared file through its channel rather
+  than editing it in place.
 
 - **Verify don't assume:** Always check config files for versions, dependencies, and structure. Don't infer from filenames, comments, or directory names.
 
