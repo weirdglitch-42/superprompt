@@ -1,19 +1,93 @@
 # Superprompt
 
-Superprompt is a project operating guide for coding agents. Its shared instructions are in [`.rules/START_HERE.md`](.rules/START_HERE.md). The guide is ordinary Markdown and does not depend on a particular agent, model, plugin, or command-line tool.
+A self-referential rules framework for AI agents that solves the memory reset problem with file-based continuity.
 
-## Use it in a project
+## The Problem
 
-Copy `.rules/START_HERE.md` into your project's `.rules/` directory and explicitly ask your agent to read it. If your agent supports project-level instruction discovery, you may add a short pointer in that agent's native configuration. Keep any existing instructions and follow that host's instruction hierarchy.
+AI agents lose all context when sessions end. Each new session starts from scratch — wasting time re-establishing context, re-reading files, and rediscovering project state.
 
-State project-specific purpose, requirements, constraints, and validation commands in your project's own documentation. The shared guide should remain reusable; copying it does not install tools, create memory folders, or authorize changes. You can also hand the file to an agent solely for review.
+## The Solution
 
-## What the guide covers
+Superprompt provides:
+- **A standardized startup ritual** — Agents read rules → check knowledge → continue
+- **A memory bank** (`knowledge/`) that persists context between sessions
+- **A quality framework** — SPEC → VERIFY → CONTINUITY for consistent output
+- **LOOP MODE** — For ongoing projects: design automations, use worktrees, codify skills, connect to tools, split maker/checker
 
-It asks an agent to identify the current task, inspect relevant context, work within scope, verify observable results, and record durable knowledge only when useful. It includes concise procedures for reviews, implementation, framework evaluation, installation, and explicitly authorized unattended work. It also describes fallbacks for missing tools, and treats external content and old project notes as evidence rather than higher-priority instructions.
+## Quick Start
 
-## Evidence and limits
+1. An AI agent enters the project
+2. Agent reads `.rules/START_HERE.md` (typically via an agent config signpost like `.claude/CLAUDE.md`, `.cursor/rules/START_HERE.mdc`, or the active agent’s supported instruction file)
+3. **Template guard** — the agent first checks whether this is the *template* (the canonical superprompt repo, identified by its git origin, not file contents) or a *workspace* (any project using a copy). In the template, the agent must NOT scaffold — it copies the framework into the target project instead. In a workspace, it proceeds with the ritual below.
+4. Agent creates `docs/`, `skills/`, and the active agent’s supported config files/folders if missing — add a pointer back to `.rules/START_HERE.md` and any needed agent-specific instructions, preserving existing configs
+5. Agent initializes `knowledge/` only if missing/empty
+6. Agent reads `knowledge/` files per the read-set schema in START_HERE.md (task-type → required files), reconciling against the changelog rather than defaulting to primary context
+7. Agent resumes previous work when requested, or uses that context for the user’s current task
 
-The same guide family has supported completed emoji-explorer tasks in both Codex and Hermes/DeepSeek. Those runs used different briefs and host capabilities, so they provide practical portability evidence rather than proof that every agent will behave identically. The standalone file in this repository is self-contained; agent-specific loading still depends on the host's own configuration.
+For a review or explanation of the guide itself, read it as the review target rather than executing the startup ritual. Native skills, sub-agents, connectors, and scheduling are optional host capabilities; START_HERE.md describes fallbacks when they are unavailable.
 
-This repository may contain additional local development material. `.rules/START_HERE.md` is the only required file to copy into a consuming project.
+Only `.rules/START_HERE.md` and this `README.md` are typically committed. Placeholder files (`.gitkeep`) in `docs/` and `skills/` may also be tracked. Everything else is generated per workspace for agent continuity.
+
+## Folder Structure
+
+```
+project/
+├── .rules/              # Agent operating framework (committed)
+│   ├── START_HERE.md   # Entry point (read first)
+│   └── *.md            # Operating framework files
+├── README.md            # This file (committed)
+├── docs/                # Project documentation (created automatically if missing)
+├── knowledge/           # Memory bank (agent continuity, generated per workspace)
+│   ├── projectBrief.md      # Core requirements, goals
+│   ├── productContext.md    # Why project exists
+│   ├── activeContext.md    # Current focus, recent changes
+│   ├── systemPatterns.md   # Architecture, design patterns
+│   ├── techContext.md      # Technologies, setup
+│   ├── progress.md         # What works, what's left
+│   └── changelog.md        # Chronological change log
+├── skills/              # Agent-platform skills (created automatically if missing)
+├── .claude/CLAUDE.md    # Claude Code entry point (signpost to START_HERE.md)
+├── .cursor/rules/       # Cursor entry point (signpost to START_HERE.md)
+└── [agent-config]/      # Other agent configs (`.codex/`, `.github/workflows/`, etc.)
+                         Brackets mean a placeholder name, not a literal path.
+```
+
+## 3-Layer Approach
+
+Agents follow a consistent quality framework:
+
+### Layer 1: SPEC
+Understand before acting. Read context, scan files, ask questions, define success criteria.
+
+### Layer 2: VERIFY
+Validate before finalizing. Cross-check against spec, iterate until criteria are met.
+
+### Layer 3: CONTINUITY
+Maintain documentation. Keep knowledge files current, document decisions.
+
+## LOOP MODE (for ongoing projects)
+
+When work never stops — daily triage, CI monitoring, continuous refactoring — design a loop instead of running tasks manually.
+
+Five primitives (tool-agnostic):
+1. **Automations** — scheduled prompts, `/goal`, `/loop`, hooks
+2. **Worktrees** — parallel isolated checkouts (`git worktree`)
+3. **Skills** — codified project knowledge (SKILL.md files)
+4. **Connectors** — MCP servers, issue trackers, Slack, CI
+5. **Sub-agents** — maker/checker split for unattended verification
+
+## Scale to Complexity
+
+Not every task needs all layers:
+- **Trivial** (single command): Skip to implementation
+- **Medium** (feature, refactor): Full 3 layers
+- **Complex** (architecture): Extra iteration in SPEC, deeper VERIFY
+- **Ongoing** (maintenance, unattended ops): Consider LOOP MODE
+
+## Design Philosophy
+
+- Technology-neutral — works for any language or framework
+- Verify don't assume — check config files, don't infer from filenames
+- File-based persistence — knowledge files survive session resets
+- Continuity vs findings — keep the seven continuity files current; findings are dated records, never regenerated for age
+- Present trade-offs neutrally — let the user decide (EVENHANDEDNESS)
